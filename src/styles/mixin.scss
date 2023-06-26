@@ -1,0 +1,50 @@
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin scrollBar {
+  &::-webkit-scrollbar-track-piece {
+    background: #d3dce6;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #99a9bf;
+    border-radius: 20px;
+  }
+}
+@mixin publicMainWidth {
+  width: 1000px;
+}
+
+@mixin relative {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+@mixin public-blue {
+  background-color: #82d4f9;
+}
+@mixin public-background-grey {
+  background-color: #f6f6f7;
+}
+@mixin public-slow-grey {
+  background-color: #e2e2e2;
+}
+@mixin public-grey {
+  background-color: #525e52
+}
+@mixin public-green {
+  background-color: #4cb050;
+}
+
+@mixin public-green-active {
+  background-color: #6eaa70;
+}

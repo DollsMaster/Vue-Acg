@@ -2,7 +2,7 @@
  * @Author: zhanghan 1599252137@qq.com
  * @Date: 2023-06-13 17:04:33
  * @LastEditors: zhanghan 1599252137@qq.com
- * @LastEditTime: 2023-06-26 15:30:31
+ * @LastEditTime: 2023-06-27 15:49:15
  * @FilePath: \fkoad:\Web\vue-acg\src\permission.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -20,14 +20,49 @@ const whiteList = ['/login'] // no redirect whitelist
 
 router.beforeEach(async(to, from, next) => {
   // start progress bar
-  NProgress.start();
   const hasToken = getToken();
+  const userInfo = store.getters.userInfo;
+  console.log('----hasToken');
+  console.log(hasToken);
+    NProgress.start();
+    if (to.path === `/fontend` && !hasToken) {
+      next();
+      NProgress.done();
+      return;
+    }
 
-  if (to.path === `/fontend`) {
+    if (hasToken) {
+      if (!userInfo) {
+        try {
+          await store.dispatch('user/getUserInfo', hasToken);
+          next();
+        } catch (error) {
+          Message.error(`${error.msg}`);
+        }
+      } else {
+        next();
+      }
+      NProgress.done();
+    } else {
+      next({path: `/fontend`});
+      NProgress.done();
+    }
+
+
+
+
+
+
+
+
+  /* if (to.path === `/fontend`) {
     next();
     NProgress.done();
     return;
   }
+
+  console.log('--hasToken');
+  console.log(hasToken);
   if (hasToken) {
     console.log(`------hasToken------`);
     next();
@@ -38,7 +73,7 @@ router.beforeEach(async(to, from, next) => {
     
     next({path: `/fontend`});
     NProgress.done();
-  }
+  } */
   
   
   /* 

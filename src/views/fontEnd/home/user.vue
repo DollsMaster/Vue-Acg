@@ -3,16 +3,19 @@
         <div class="user-cover" slot="reference" v-if="islogin">
             <img  :src="url" alt="" srcset="" @click="userInfoVisable = !userInfoVisable">
         </div>
-        <div class="user-login-btn">
+        <div class="user-login-btn" v-else>
             <span @click="registerData = Math.random()">登陆</span>
         </div>
         <div class="user-info" :class="{'user-info-show': userInfoVisable}">
             <h1>积分: 1000</h1>
             <ul>
                 <li v-for="(item, index) in config" :key="index">
-                    <h1>{{item.name}}</h1>
-                    <div v-for="(itema, indexa) in item.children" :key="indexa">
-                        <span></span>
+                    <div class="user-nav-title">
+                        <i :class=[item.icon]></i>
+                        <h1>{{item.name}}</h1>
+                    </div>
+                    <div v-for="(itema, indexa) in item.children" :key="indexa" class="user-nav-children" @click="navbarClick(itema)">
+                        <i :class=[itema.icon]></i>
                         <p>{{itema.name}}</p>
                     </div>
                 </li>
@@ -25,32 +28,9 @@
 
 <script>
 import registerVue from './register.vue'
-const config = [
-    {
-        name: '个人设置',
-        icon: '',
-        children: [
-            {
-                name: '我的概述'
-            },{
-                name: '我的设置'
-            }
-        ]
-    },{
-        name: '游戏中心',
-        children: [
-            {
-                name: '勋章'
-            }
-        ]
-    },{
-        name: '圈子'
-    },{
-        name: '消息管理'
-    },{
-        name: '文章管理'
-    }
-]
+import fontendDictionary from '@/utils/fontendDictionary';
+import { mapState } from 'vuex';
+const userNavbar = fontendDictionary.dictionary.userNavbar;
 export default {
     name: "user",
     components: {
@@ -59,14 +39,34 @@ export default {
     data() {
         return {
             url: "https://dthezntil550i.cloudfront.net/w8/latest/w81706122001576120000407005/1280_960/ae7216d6-bafb-4d35-9288-5a562578f5a4.png",
-            islogin: false,
+            islogin: null,
             userStatus: true,
             userInfoVisable: false,
-            config: config,
+            config: userNavbar,
             registerData: null
         }
     },
-
+    computed: {
+        ...mapState({
+            userInfo: state => state.user.userInfo
+        }),
+    },
+    watch: {
+        userInfo(newValue, oldValue) {
+            this.islogin = this.userInfo;
+        }
+    },
+    beforeMount () {
+        this.initController();
+    },
+    methods: {
+        initController() {
+            this.islogin = this.userInfo;
+        },
+        navbarClick(item) {
+            console.log(item);
+        }
+    },
 }
 </script>
 <style lang="scss" scoped>
@@ -104,20 +104,24 @@ export default {
 .user-container  .user-info-show {
     z-index: 1;
     visibility: visible;
-    max-width: 500px;
-    max-height: 500px;
+    transform: scale(1, 1);
+    transform-origin: 90% 10px;
+    /* max-width: 500px;
+    max-height: 500px; */
 }
 .user-info {
     z-index: -1;
     visibility: hidden;
-    transition: all 0.5s;
+    transition: all 0.3s;
     position: absolute;
+    transform: scale(0, 0);
+    transform-origin: 90% 10px;
     right: 0;
     top: 0;
     width: auto;
     height: auto;
-    max-width: 0;
-    max-height: 0;
+    max-width: 500;
+    max-height: 500;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: 0 0 0 1px hsla(240,0%,100%,.3) inset,
@@ -135,15 +139,54 @@ export default {
         padding: 1rem;
         display: flex;
         flex-direction: row;
+        
         li {
-            padding: 0 1rem;
+            cursor: default;
+            border-left: solid 1px var(--sys--preset--color--grey-low);
+            :first-child {
+                border-left: 0;
+            }
             * {
                 white-space: nowrap;
             }
-            >div {
-                padding: 1rem 0 0 0;
-            }
         }
+    }
+}
+.user-nav-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    i {
+        padding: 0.5rem;
+        font-size: 1rem;
+        color: #fff;
+        background-color: var(--sys--preset--background--color--black-middle);
+        border-radius: 100%;
+    }
+    h1 {
+        padding: 0.8rem 0;
+        color: gray;
+    }
+}
+.user-nav-children {
+    
+    min-width: 6rem;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    &:hover {
+        transition: all 0.2s;
+        background-color: var(--sys--preset--background--color--black-middle);
+        p, i {
+            color: #fff;
+        }
+    }
+    i {
+        padding: 0 5px 0 0;
+    }
+    p {
+        font-size: 12px;
     }
 }
 </style>

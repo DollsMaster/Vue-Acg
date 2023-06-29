@@ -2,7 +2,7 @@
  * @Author: zhanghan 1599252137@qq.com
  * @Date: 2023-06-15 17:40:46
  * @LastEditors: zhanghan 1599252137@qq.com
- * @LastEditTime: 2023-06-26 14:27:14
+ * @LastEditTime: 2023-06-29 18:59:25
  * @FilePath: \fkoad:\Web\vue-acg\src\views\fontEnd\home\header.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -17,19 +17,19 @@
                     :key="index" 
                     @mouseover="secondMenuChecked = index" 
                     @mouseout="secondMenuChecked = null">
-                        <div v-if="item.label === '首页'">
+                        <div v-if="item.label === '首页'" >
                             <i class="el-icon-s-home"></i>
-                            <span class="header-navbar-text">{{item.name}}</span>
+                            <span class="header-navbar-text" @click="clickEv(item)">{{item.name}}</span>
                         </div>
                         <div v-else>
-                            <span class="header-navbar-text">{{item.name}}</span>
+                            <span class="header-navbar-text" @click="clickEv(item)">{{item.name}}</span>
                             <ul class="second-menu-list" v-show="item.children.length > 0 && secondMenuChecked === index">
-                                <li v-for="(itema, indexb) in item.children" :key="indexb">{{itema.name}}</li>
+                                <li v-for="(itema, indexb) in item.children" :key="indexb" @click="clickEv(itema)">{{itema.name}}</li>
                             </ul>
                         </div>
                     </li>
                 </ul>
-                <user-vue></user-vue>
+                <work-control-vue></work-control-vue>
             </div>
         </div>
     </div>
@@ -37,10 +37,10 @@
 
 <script>
 import { getMenuList } from '@/api/menu'
-import userVue from './user.vue'
+import workControlVue from '@/components/workControl/workControl.vue'
 export default {
     components: {
-        userVue,
+        workControlVue,
     },
     data() {
         return {
@@ -56,10 +56,11 @@ export default {
             getMenuList().then(res => {
                 const {result} = res;
                     this.navbarOptions = result;
-                    console.log('-this.navbarOptions');
-                    console.log(this.navbarOptions);
             });
             
+        },
+        clickEv(data) {
+            this.$router.push({path: data.url, params: data});
         }
     },
 }
@@ -76,7 +77,7 @@ export default {
     background-size: 100% 100%;
     background-repeat: no-repeat;
         background-size: cover;
-    background-image: url("https://www.hmoeh.com/wp-content/uploads/2023/05/80e19b6816f6836185938e0f27984bee-123.png");
+    background-image: url("https://www.hmoeh.com/wp-content/uploads/2023/05/80e19b6816f6836185938e0f27984bee.png");
 }
 .header-navbar {
     

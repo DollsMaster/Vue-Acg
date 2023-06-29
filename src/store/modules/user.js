@@ -43,9 +43,6 @@ const actions = {
   getUserInfo({commit}, token) {
     return new Promise((resolve, reject) => {
       getUserByToken(token).then(res => {
-
-        console.log('================s');
-        console.log(res);
         commit('SET_NAME', res.result.name);
         commit('SET_USER_INFO', res.result);
         resolve(res.result);

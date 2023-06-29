@@ -1,7 +1,7 @@
 <template>
-    <div class="user-container">
+    <div class="user-container" @mouseover="userInfoVisable = true" @mouseout="userInfoVisable = false">
         <div class="user-cover" slot="reference" v-if="islogin">
-            <img  :src="url" alt="" srcset="" @click="userInfoVisable = !userInfoVisable">
+            <img  :src="url" alt="" srcset="" >
         </div>
         <div class="user-login-btn" v-else>
             <span @click="registerData = Math.random()">登陆</span>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import registerVue from './register.vue'
+import registerVue from '@/components/register/register.vue'
 import fontendDictionary from '@/utils/fontendDictionary';
 import { mapState } from 'vuex';
 const userNavbar = fontendDictionary.dictionary.userNavbar;
@@ -64,6 +64,10 @@ export default {
             this.islogin = this.userInfo;
         },
         navbarClick(item) {
+            this.userInfoVisable = false;
+            if (item.url) {
+                this.$router.push({'path': item.url});
+            }
             console.log(item);
         }
     },
@@ -110,6 +114,11 @@ export default {
     max-height: 500px; */
 }
 .user-info {
+    &:hover {
+        
+    }
+}
+.user-info {
     z-index: -1;
     visibility: hidden;
     transition: all 0.3s;
@@ -123,10 +132,11 @@ export default {
     max-width: 500;
     max-height: 500;
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.7);
     box-shadow: 0 0 0 1px hsla(240,0%,100%,.3) inset,
             0 .5em 1em rgba(0, 0, 0, 0.6);
     overflow: hidden;
+    backdrop-filter: blur(8px);
     >h1 {
         padding: 1rem 0;
         border-radius: 5px 5px 0 0;

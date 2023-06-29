@@ -20,6 +20,34 @@
     border-radius: 20px;
   }
 }
+@mixin text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin box-shadow{
+  border-radius: 3px;
+  background-color: #ffffff;
+  box-shadow: 0 0 0.6rem rgba(168, 168, 168, 0.8);
+}
+
+@mixin preview-default {
+  transition: all 0.2s;
+  transform: scale(1, 1);
+}
+
+@mixin preview-hover {
+  cursor: pointer;
+  transform: scale(1.05, 1.05);
+}
+
+@mixin nav-bar-first-i {
+  color: #ffffff;
+  background-color: var(--sys--preset--background--color--black-middle);
+  border-radius: 100%;
+}
+
 @mixin publicMainWidth {
   width: 1000px;
 }

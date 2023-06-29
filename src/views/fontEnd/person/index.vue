@@ -1,13 +1,9 @@
 <template>
     <div class="container hp100">
-        <headerVue></headerVue>
         <div class="main">
             <div class="shade"></div>
             <img :src="url">
             <div class="main-wrap">
-                <div class="main-banner">
-                    <img class="wp100 hp100" :src="bannerUrl" alt="">
-                </div>
                 <div class="person-info">
                     <div>
                         <img :src="url">
@@ -52,7 +48,7 @@ export default {
     data() {
         return {
             navbarChecked: 0,
-            bannerUrl: "https://img.zcool.cn/community/0136765a55f7a4a8012113c7687e00.jpg@2o.jpg",
+            
             url: "https://dthezntil550i.cloudfront.net/w8/latest/w81706122001576120000407005/1280_960/ae7216d6-bafb-4d35-9288-5a562578f5a4.png",
             navbar: []
         }
@@ -112,14 +108,7 @@ $navBarListTextCheckedColor: var(--sys--preset--color--grey-high);
     display: flex;
     flex-direction: column;
 }
-.main-banner {
-    width: inherit;
-    height: 200px;
-    border-radius: 5px;
-    img {
-        border-radius: 10px;
-    }
-}
+
 .person-info {
     padding: 2rem 0;
     display: flex;

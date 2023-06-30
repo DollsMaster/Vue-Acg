@@ -17,6 +17,19 @@
                 </el-input>
             </li>
             <li>
+                <el-tag class="el-tag" effect="dark">文章封面</el-tag>
+                <el-upload
+                    class="upload-demo mt10"
+                    :name="`files`"
+                    :action="getActionUrl()"
+                    :file-list="page.files"
+                    :with-credentials="true"
+                    list-type="picture"
+                    :on-success="onSuccess">
+                    <el-button size="small" type="primary">点击上传</el-button>
+                </el-upload>
+            </li>
+            <li>
                 <el-tag class="el-tag" effect="dark">选择目录</el-tag>
                 <el-cascader
                 class="mt10"
@@ -34,10 +47,10 @@
                     v-for="(item, index) in page.tags" 
                     v-model="page.tags[index]"
                     :key="index"
-                    class="el-input"  
+                    class="el-input mr10"  
                     :size="`mini`" 
                     placeholder="请输入内容"></el-input>
-                    <el-button class="ml10" type="primary" size="mini">添加</el-button>
+                    <el-button class="ml10" type="primary" size="mini" @click="page.tags.push(null)">添加</el-button>
                 </div>
             </li>
             <li>
@@ -79,10 +92,12 @@ export default {
                 content: null,
                 menus: null,
                 tags: [null],
+                files: [],
                 downloads: [download],
             },
             menuModel: null,
-            options: []
+            options: [],
+            fileList: []
         }
     },
     beforeMount () {
@@ -95,11 +110,23 @@ export default {
                 console.log(res);
             });
         },
+        getActionUrl() {
+            return `${process.env.VUE_APP_BASE_API}/file/upload`;
+        },
+        onSuccess(data) {
+            this.page.files.push(data.result);
+            console.log(data);
+        },
         submit() {
+            console.log(this.page);
             const page = JSON.parse(JSON.stringify(this.page));
                 page.menus = page.menus.join('');
                 page.tags = page.tags.join(',');
+                //page.files = page.files.join(',');
                 page.downloads = JSON.stringify(page.downloads);
+                if (page.files.length > 0) {
+                    page.files = JSON.stringify(page.files[0])
+                }
             const status = this.verify(page);
                 if (!status) return;
                 addArticle(page).then(res => {

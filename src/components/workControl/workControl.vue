@@ -1,5 +1,5 @@
 <template>
-    <div class="user-container" @mouseover="userInfoVisable = true" @mouseout="userInfoVisable = false">
+    <div class="user-container" @mouseover="userInfoVisable = islogin?true:false" @mouseout="userInfoVisable = false">
         <div class="user-cover" slot="reference" v-if="islogin">
             <img  :src="url" alt="" srcset="" >
         </div>
@@ -30,6 +30,7 @@
 import registerVue from '@/components/register/register.vue'
 import fontendDictionary from '@/utils/fontendDictionary';
 import { mapState } from 'vuex';
+import { loginOut } from '@/api/user';
 const userNavbar = fontendDictionary.dictionary.userNavbar;
 export default {
     name: "user",
@@ -53,6 +54,7 @@ export default {
     },
     watch: {
         userInfo(newValue, oldValue) {
+            
             this.islogin = this.userInfo;
         }
     },
@@ -67,6 +69,12 @@ export default {
             this.userInfoVisable = false;
             if (item.url) {
                 this.$router.push({'path': item.url});
+            }
+            if (item.value === `loginOut`) {
+                console.log(this.userInfo);
+                loginOut({id: this.userInfo.id}).then(res => {
+                    location.reload();
+                });
             }
             console.log(item);
         }

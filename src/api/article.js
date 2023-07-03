@@ -7,3 +7,11 @@ export function addArticle(data) {
     data: data
   })
 }
+
+export function getArticleList(params) {
+  return request({
+    url: `/article/getArticleList`,
+    method: `get`,
+    params: params
+  })
+}

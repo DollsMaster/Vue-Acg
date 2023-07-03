@@ -9,7 +9,7 @@
                 <div class="info">
                     <img :src="page.avator" :alt="page.name">
                     <span class="wp100 ml10">{{page.name}}</span>
-                    <span>时间</span>
+                    <span>{{page.time}}</span>
                 </div>
             </div>
         </div>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { transformTimer } from "@/utils/public";
 export default {
     name: "preview",
     props: {
@@ -32,6 +33,7 @@ export default {
                 name: null,
                 url: null,//``,
                 avator: null, //""
+                time: null
             }
         }
     },
@@ -46,9 +48,19 @@ export default {
     methods: {
         init() {
             const data = this.data;
-                for (let key in this.page) {
-                    this.page[key] = data[key];
+                this.page.title = data.name;
+                if (data.file) {
+                    const fileInfo = JSON.parse(data.file);
+                    this.page.url = `${process.env.VUE_APP_BASE_API}/file/${fileInfo.fileName}${fileInfo.format}`;
+                    this.page.avator = `${process.env.VUE_APP_BASE_API}/file/${fileInfo.fileName}${fileInfo.format}`;
                 }
+                
+                const status = transformTimer(data.createTime);
+                if (status) {
+                    this.page.time = transformTimer(data.createTime);
+                }
+                
+                
         }
     },
 }
@@ -75,7 +87,7 @@ $border-radius: 10px;
         border-radius: inherit;    
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-        
+        object-fit: cover;
     }
     >div {
         padding: 0.8rem;
@@ -84,6 +96,14 @@ $border-radius: 10px;
     .name {
         font-size: 0.5rem;
         color: #1c1c1c;
+
+            color: #151b3c;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
     }
     .info {
         display: flex;

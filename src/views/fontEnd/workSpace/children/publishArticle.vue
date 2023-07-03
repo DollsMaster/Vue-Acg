@@ -12,7 +12,6 @@
                 type="textarea"
                 placeholder="请输入内容"
                 v-model="page.content"
-                maxlength="30"
                 show-word-limit>
                 </el-input>
             </li>
@@ -20,11 +19,13 @@
                 <el-tag class="el-tag" effect="dark">文章封面</el-tag>
                 <el-upload
                     class="upload-demo mt10"
-                    :name="`files`"
+                    :name="`file`"
                     :action="getActionUrl()"
-                    :file-list="page.files"
+                    :file-list="fileList"
                     :with-credentials="true"
                     list-type="picture"
+                    :on-change="onChange"
+                    :http-request="httpRequest"
                     :on-success="onSuccess">
                     <el-button size="small" type="primary">点击上传</el-button>
                 </el-upload>
@@ -77,6 +78,7 @@
 <script>
 import { getMenuList } from '@/api/menu';
 import { addArticle } from "@/api/article";
+import Axios from 'axios';
 const download = {
     "name": null,
     "url": null,
@@ -92,7 +94,7 @@ export default {
                 content: null,
                 menus: null,
                 tags: [null],
-                files: [],
+                file: [],
                 downloads: [download],
             },
             menuModel: null,
@@ -113,20 +115,44 @@ export default {
         getActionUrl() {
             return `${process.env.VUE_APP_BASE_API}/file/upload`;
         },
-        onSuccess(data) {
-            this.page.files.push(data.result);
+        onChange(data) {
+            console.log('-ffffffffff');
             console.log(data);
+        },
+        onSuccess(data) {
+            
+            console.log(data);
+        },
+        httpRequest(data) {
+            const formData = new FormData();
+            formData.append("files", data.file);
+            Axios({
+                baseURL: process.env.VUE_APP_BASE_API,
+                url: `/file/upload`,
+                method: `post`,
+                data: formData,
+                withCredentials: true
+            }).then(res => {
+                this.$message.success(`上传成功！`);
+                this.page.file.push(res.data.result);
+                console.log('---shangchuan');
+                console.log(res);
+                console.log(this.page);
+            }).catch(err => {
+                this.$message.error(err.msg);
+            })
         },
         submit() {
             console.log(this.page);
             const page = JSON.parse(JSON.stringify(this.page));
-                page.menus = page.menus.join('');
+                page.menus = page.menus[page.menus.length -1];
                 page.tags = page.tags.join(',');
-                //page.files = page.files.join(',');
                 page.downloads = JSON.stringify(page.downloads);
-                if (page.files.length > 0) {
-                    page.files = JSON.stringify(page.files[0])
+                if (page.file.length > 0) {
+                    page.file = JSON.stringify(page.file[0])
                 }
+
+                console.log(page);
             const status = this.verify(page);
                 if (!status) return;
                 addArticle(page).then(res => {

@@ -1,5 +1,5 @@
 <template>
-    <div class="user-container" @mouseover="userInfoVisable = islogin?true:false" @mouseout="userInfoVisable = false">
+    <div class="user-container" @mouseover="userInfoVisable = (islogin?true:false) && loadding" @mouseout="userInfoVisable = false">
         <div class="user-cover" slot="reference" v-if="islogin">
             <img  :src="url" alt="" srcset="" >
         </div>
@@ -41,6 +41,7 @@ export default {
         return {
             url: "https://dthezntil550i.cloudfront.net/w8/latest/w81706122001576120000407005/1280_960/ae7216d6-bafb-4d35-9288-5a562578f5a4.png",
             islogin: null,
+            loadding: true,
             userStatus: true,
             userInfoVisable: false,
             config: userNavbar,
@@ -67,6 +68,7 @@ export default {
         },
         navbarClick(item) {
             this.userInfoVisable = false;
+            this.loadding = false;
             if (item.url) {
                 this.$router.push({'path': item.url});
             }
@@ -76,6 +78,9 @@ export default {
                     location.reload();
                 });
             }
+            setTimeout(() => {
+                this.loadding = true;
+            }, 500);
             console.log(item);
         }
     },
@@ -118,6 +123,7 @@ export default {
     visibility: visible;
     transform: scale(1, 1);
     transform-origin: 90% 10px;
+    opacity: 1;
     /* max-width: 500px;
     max-height: 500px; */
 }
@@ -129,9 +135,10 @@ export default {
 .user-info {
     z-index: -1;
     visibility: hidden;
-    transition: all 0.3s;
+    transition: all 0.4s;
     position: absolute;
-    transform: scale(0, 0);
+    opacity: 0;
+    transform: scale(0.5, 0.5);
     transform-origin: 90% 10px;
     right: 0;
     top: 0;

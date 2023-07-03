@@ -21,7 +21,7 @@
         <div class="content-wrap">
             <div class="content-title">游戏</div>
             <div class="content-list">
-                <preview-vue :data="item" v-for="(item, index) in list" :key="index"></preview-vue>
+                <preview-vue :data="item" v-for="(item, index) in page.game" :key="index"></preview-vue>
             </div>
             <div class="content-more">更多游戏</div>
         </div>
@@ -39,6 +39,7 @@
 <script>
 import previewVue from "@/components/preview";
 import bannerPreviewVue from "@/components/bannerPreview";
+import { getArticleList } from "@/api/article";
 export default {
     components: {
         previewVue,
@@ -47,6 +48,9 @@ export default {
     data() {
         return {
             list: [],
+            page: {
+                game: [],
+            },
             bannerList: [
                 {
                     url: `https://images.pexels.com/photos/2286895/pexels-photo-2286895.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`,
@@ -79,6 +83,20 @@ export default {
             }
             this.list = list;
             console.log(this.list);
+            this.initRecently();
+            this.initGame();
+            this.initCartoon();
+        },
+        initRecently() {
+
+        },
+        initGame() {
+            getArticleList({ids: "4,10,11"}).then(res => {
+                this.page.game = res.result;
+            });
+        },
+        initCartoon() {
+
         }
     },
 }

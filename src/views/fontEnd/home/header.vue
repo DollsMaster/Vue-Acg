@@ -76,8 +76,8 @@ export default {
     height: 14rem;
     background-size: 100% 100%;
     background-repeat: no-repeat;
-        background-size: cover;
-    background-image: url("https://www.hmoeh.com/wp-content/uploads/2023/05/80e19b6816f6836185938e0f27984bee.png");
+    background-size: cover;
+    /* background-image: url("https://www.hmoeh.com/wp-content/uploads/2023/05/80e19b6816f6836185938e0f27984bee.png"); */
 }
 .header-navbar {
     

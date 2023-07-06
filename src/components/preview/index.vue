@@ -69,7 +69,6 @@ export default {
 @import '@/styles/mixin.scss';
 $border-radius: 10px;
 .preview {
-    width: 10rem;
     height: 11rem;
 }
 .preview-container {

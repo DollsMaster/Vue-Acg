@@ -1,38 +1,25 @@
 <template>
-    <div class="main">
-        <div class="banner">
+    <div class="main-container">
+        <div class="banner-wrap">
             <el-carousel class="el-carousel-banner" trigger="click" style="width: 100%;height: 19rem">
                 <el-carousel-item v-for="(item, index) in bannerList" :key="index">
                     <img class="wp100 hp100" style="border-radius: 5px" :src="item.url" alt="">
                     <span>{{item.label}}</span>
                 </el-carousel-item>
             </el-carousel>
-            <div class="recently-wrap">
-                <bannerPreview-vue :data="item" v-for="(item, index) in list" :key="index"></bannerPreview-vue>
-            </div>
         </div>
-        <div class="content-wrap">
-            <div class="content-title">最近更新</div>
-            <div class="content-list">
-                <preview-vue :data="item" v-for="(item, index) in list" :key="index"></preview-vue>
+        <div class="hot-wrap">
+            <div class="sys-col-lg-4 sys-col-md-6" v-for="(item, index) in list" :key="index">
+                <bannerPreview-vue 
+                :data="item" 
+                
+                :key="index"
+                ></bannerPreview-vue>
             </div>
-            <div class="content-more">更多最近更新</div>
+            
         </div>
-        <div class="content-wrap">
-            <div class="content-title">游戏</div>
-            <div class="content-list">
-                <preview-vue :data="item" v-for="(item, index) in page.game" :key="index"></preview-vue>
-            </div>
-            <div class="content-more">更多游戏</div>
-        </div>
-        <div class="content-wrap">
-            <div class="content-title">漫画</div>
-            <div class="content-list">
-                <preview-vue :data="item" v-for="(item, index) in list" :key="index"></preview-vue>
-            </div>
-            <div class="content-more">更多漫画</div>
-        </div>
-        <!--  -->
+        <div class="content-wrap"></div>
+        <div class="advertising-wrap"></div>
     </div>
 </template>
 
@@ -48,9 +35,6 @@ export default {
     data() {
         return {
             list: [],
-            page: {
-                game: [],
-            },
             bannerList: [
                 {
                     url: `https://images.pexels.com/photos/2286895/pexels-photo-2286895.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`,
@@ -65,7 +49,7 @@ export default {
             ]
         }
     },
-    beforeMount () {
+    created () {
         this.init();
     },
     methods: {
@@ -82,82 +66,54 @@ export default {
                 list.push(tem);
             }
             this.list = list;
-            console.log(this.list);
-            this.initRecently();
-            this.initGame();
-            this.initCartoon();
-        },
-        initRecently() {
-
-        },
-        initGame() {
-            getArticleList({ids: "4,10,11"}).then(res => {
-                this.page.game = res.result;
-            });
-        },
-        initCartoon() {
-
         }
     },
 }
 </script>
 <style lang="scss" scoped>
-@import '@/styles/mixin.scss';
-.main {
-    padding: 1rem 0;
+.main-container {  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-auto-columns: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "banner-wrap banner-wrap banner-wrap hot-wrap hot-wrap hot-wrap hot-wrap"
+    "banner-wrap banner-wrap banner-wrap hot-wrap hot-wrap hot-wrap hot-wrap"
+    "banner-wrap banner-wrap banner-wrap hot-wrap hot-wrap hot-wrap hot-wrap"
+    "content-wrap content-wrap content-wrap content-wrap content-wrap advertising-wrap advertising-wrap"
+    "content-wrap content-wrap content-wrap content-wrap content-wrap advertising-wrap advertising-wrap"
+    "content-wrap content-wrap content-wrap content-wrap content-wrap advertising-wrap advertising-wrap"
+    "content-wrap content-wrap content-wrap content-wrap content-wrap advertising-wrap advertising-wrap"
+    "content-wrap content-wrap content-wrap content-wrap content-wrap advertising-wrap advertising-wrap"
+    "content-wrap content-wrap content-wrap content-wrap content-wrap advertising-wrap advertising-wrap";
 }
-.banner {
-    display: flex;
-    flex-direction: row;
-}
-.recently-wrap {
+
+.banner-wrap { grid-area: banner-wrap; background-color: gray; }
+
+.hot-wrap { 
+    
+    grid-area: hot-wrap; 
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    >div {
-        margin: 0 0 10px 10px;
-        width: calc((100% / 3) - (10px * 1));
-        height: calc(50% - 5px);
-    }
+    div {
+        padding: 5px;
+        
+    }   
+    /* display: grid;
+    padding: 10px;
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+    grid-template-columns: repeat(auto-fill, calc(33.33% - 8px));
+    grid-template-rows: repeat(2, calc(50% - 5px));
+ */
+    background-color: red; 
+    
 }
-.content-wrap {
-    .content-title {
-        padding: 1rem 0;
-        width: 100%
-    }
-    .content-list {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        >div {
-            margin: 0 0 10px 0;
-            width: calc(20% - 10px);
-        }
-    }
-    .content-more {
-        width: 100%;
-        height: 3rem;
-        line-height: 3rem;
-        text-align: center;
-        @include box-shadow;
-        @include preview-default;
-        border-radius: 30px;
-        &:hover {
-            @include preview-hover;
-        }
-    }
-}
-.el-carousel {
-    z-index: 0;
-    @include box-shadow;
-    border-radius: 5px;
-    min-width: 30rem;
-}
-</style>
-<style>
-.el-carousel-banner .el-carousel__container {
-    height: 100%;
-}
+
+.content-wrap { grid-area: content-wrap; background-color: green;}
+
+.advertising-wrap { grid-area: advertising-wrap; background-color: rgb(150, 53, 53);}
+
 </style>

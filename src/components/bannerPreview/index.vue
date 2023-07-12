@@ -53,7 +53,8 @@ export default {
 $border-radius: 10px;
 .bannerPreview {
     position: relative;
-    height: 8rem;
+    z-index: 0;
+    height: 9rem;
     @include box-shadow;
     border-radius: $border-radius;
 }

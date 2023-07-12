@@ -2,7 +2,7 @@
  * @Author: zhanghan 1599252137@qq.com
  * @Date: 2023-06-15 17:40:46
  * @LastEditors: zhanghan 1599252137@qq.com
- * @LastEditTime: 2023-07-01 20:20:08
+ * @LastEditTime: 2023-07-11 14:46:28
  * @FilePath: \fkoad:\Web\vue-acg\src\views\fontEnd\home\header.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -68,6 +68,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/styles/mixin.scss';
 .header-container {
+    z-index: 10;
     //position: relative;
     //z-index: 10;
     display: flex;
@@ -80,7 +81,7 @@ export default {
     /* background-image: url("https://www.hmoeh.com/wp-content/uploads/2023/05/80e19b6816f6836185938e0f27984bee.png"); */
 }
 .header-navbar {
-    
+    z-index: 10;
     display: flex;
     justify-content: center;
     width: 100%;
@@ -98,7 +99,7 @@ export default {
 }
 .header-navbar-wrap {
     position: relative;
-    @include publicMainWidth;
+    width: var(--system-width);
     display: flex;
     flex-direction: row;
     align-items: center;

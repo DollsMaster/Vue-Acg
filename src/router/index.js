@@ -2,7 +2,7 @@
  * @Author: zhanghan 1599252137@qq.com
  * @Date: 2023-06-13 17:04:33
  * @LastEditors: zhanghan 1599252137@qq.com
- * @LastEditTime: 2023-06-28 10:09:24
+ * @LastEditTime: 2023-07-11 15:40:34
  * @FilePath: \fkoad:\Web\vue-acg\src\router\index.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -118,6 +118,11 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
+  {
+    path: '/refresh',
+    name: 'refresh',
+    component: () => import('@/views/errorPage/refresh/refresh')
+  }
   // 404 page must be placed at the end !!!
   /* { path: '*', redirect: '/404', hidden: true } */
 ]

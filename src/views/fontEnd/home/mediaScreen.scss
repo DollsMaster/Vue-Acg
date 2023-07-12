@@ -1,0 +1,99 @@
+
+@media (min-width: 1000px) {
+    .banner-wrap { 
+        grid-column: 1 / 4;
+        grid-row: 1;
+    }
+    .hot-wrap {
+        grid-column: 4 / 8;
+        grid-row: 1;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    .content-wrap {
+        grid-column: 1 / 6;
+    }
+
+    .recently-wrap {
+        grid-row: 2;
+    }
+    .game-wrap {
+        grid-row: 3;
+    }
+    .cartoon-wrap {
+        grid-row: 4;
+    }
+    .advertising-wrap {
+        grid-column: 6 / 8;
+        grid-row: 2 / 6;
+    }
+    .content-list {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+}
+@media (max-width: 1000px) {
+    .banner-wrap { 
+        grid-column: 1 / 8;
+        grid-row: 1;
+    }
+    .hot-wrap {
+        grid-column: 1 / 8;
+        grid-row: 2;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    .content-wrap {
+        grid-column: 1 / 8;
+    }
+
+    .content-list {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    .recently-wrap {
+        grid-row: 3;
+    }
+    .game-wrap {
+        grid-row: 4;
+    }
+    .cartoon-wrap {
+        grid-row: 5;
+    }
+    .advertising-wrap {
+        grid-column: 1 / 8;
+        grid-row: 6;
+    }
+}
+@media (max-width: 500px) {
+    .banner-wrap { 
+        grid-column: 1 / 8;
+        grid-row: 1;
+    }
+    .hot-wrap {
+        grid-column: 1 / 8;
+        grid-row: 2;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .content-wrap {
+        grid-column: 1 / 8;
+    }
+
+    .content-list {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .recently-wrap {
+        grid-row: 3;
+    }
+    .game-wrap {
+        grid-row: 4;
+    }
+    .cartoon-wrap {
+        grid-row: 5;
+    }
+    .advertising-wrap {
+        grid-column: 1 / 8;
+        grid-row: 6;
+    }
+}

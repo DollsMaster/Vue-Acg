@@ -4,6 +4,9 @@
 @import './element-ui.scss';
 @import './sidebar.scss';
 @import './system.scss';
+html,body {
+  background-color: #f6f6f6;
+}
 body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
@@ -156,7 +159,7 @@ section {
 body {
 	font-size: 13px;
 	color: #333;
-	background: #fff;
+	background: #f6f6f6;
 	font-family: "Microsoft YaHei", "simsun", "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 .animated{

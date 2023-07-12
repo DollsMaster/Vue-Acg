@@ -22,8 +22,6 @@ router.beforeEach(async(to, from, next) => {
   // start progress bar
   const hasToken = getToken();
   const userInfo = store.getters.userInfo;
-  console.log('----hasToken');
-  console.log(hasToken);
     NProgress.start();
     if (to.path === `/fontend` && !hasToken) {
       next();

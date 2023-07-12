@@ -70,10 +70,16 @@ export default {
             this.userInfoVisable = false;
             this.loadding = false;
             if (item.url) {
-                this.$router.push({'path': item.url});
+                this.$router.push({
+                    path: item.url, 
+                    params: item, 
+                    query:{
+                        params: JSON.stringify(item),
+                        _time:new Date().getTime()/1000  // 时间戳，刷新当前router
+                    }
+                });
             }
             if (item.value === `loginOut`) {
-                console.log(this.userInfo);
                 loginOut({id: this.userInfo.id}).then(res => {
                     location.reload();
                 });
@@ -81,7 +87,6 @@ export default {
             setTimeout(() => {
                 this.loadding = true;
             }, 500);
-            console.log(item);
         }
     },
 }
@@ -89,6 +94,7 @@ export default {
 <style lang="scss" scoped>
 .user-container {
     position: relative;
+    z-index: 1;
 }
 .user-login-btn {
     span {
@@ -119,18 +125,13 @@ export default {
     }
 }
 .user-container  .user-info-show {
-    z-index: 1;
+    z-index: 10;
     visibility: visible;
     transform: scale(1, 1);
     transform-origin: 90% 10px;
     opacity: 1;
     /* max-width: 500px;
     max-height: 500px; */
-}
-.user-info {
-    &:hover {
-        
-    }
 }
 .user-info {
     z-index: -1;

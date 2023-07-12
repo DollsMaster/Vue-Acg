@@ -1,7 +1,7 @@
 <template>
-    <div class="workSpace">
+    <div class="workSpace" >
         <bannerVue></bannerVue>
-        <div class="main">
+        <div class="main" v-if="loadding">
             <menuVue @change="menuChange"></menuVue>
             <component class="component-wrap" :is="getComponentName"  />
         </div>
@@ -28,12 +28,27 @@ export default {
     components: obj,
     data() {
         return {
+            loadding: false,
             getComponentName: null
         }
     },
+    watch: {
+        $route(newValue, oldValue) {
+            this.init();
+        }
+    },
+    created () {
+        this.init();
+    },
     methods: {
+        init() {
+            this.loadding = false;
+            setTimeout(() => {
+                this.loadding = true;
+            }, 200);;
+        },
         menuChange(data) {
-            console.log('---');
+            console.log('--menuChange-');
             console.log(data);
             this.getComponentName = data.value;
         }
@@ -53,7 +68,6 @@ export default {
 }
 .component-wrap {
     margin: 0 0 0 1rem;
-    padding: 1.5rem;
     width: 100%;
 }
 </style>

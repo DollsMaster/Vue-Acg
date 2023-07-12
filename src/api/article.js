@@ -15,3 +15,11 @@ export function getArticleList(params) {
     params: params
   })
 }
+
+export function getArticleListByIsBanner(params) {
+  return request({
+    url: `/article/getArticleListByIsBanner`,
+    method: `get`,
+    params: params
+  })
+}

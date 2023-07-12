@@ -49,18 +49,16 @@ export default {
         init() {
             const data = this.data;
                 this.page.title = data.name;
+                this.page.url = data.url
                 if (data.file) {
                     const fileInfo = JSON.parse(data.file);
                     this.page.url = `${process.env.VUE_APP_BASE_API}/file/${fileInfo.fileName}${fileInfo.format}`;
                     this.page.avator = `${process.env.VUE_APP_BASE_API}/file/${fileInfo.fileName}${fileInfo.format}`;
                 }
-                
                 const status = transformTimer(data.createTime);
                 if (status) {
                     this.page.time = transformTimer(data.createTime);
                 }
-                
-                
         }
     },
 }

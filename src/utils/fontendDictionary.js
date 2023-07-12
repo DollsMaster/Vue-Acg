@@ -2,7 +2,7 @@
  * @Author: zhanghan 1599252137@qq.com
  * @Date: 2023-06-22 16:59:12
  * @LastEditors: zhanghan 1599252137@qq.com
- * @LastEditTime: 2023-06-28 10:10:08
+ * @LastEditTime: 2023-07-11 15:09:56
  * @FilePath: \fkoad:\CPerson\ACG\vue-acg\src\utils\fontendDictionary.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -84,7 +84,8 @@ const dictionary = {
             children: [
                 {
                     icon: 'el-icon-message-solid',
-                    name: '我的概述'
+                    name: '我的概述',
+                    value: null
                 },{
                     icon: 'el-icon-message-solid',
                     name: '我的设置'

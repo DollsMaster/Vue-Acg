@@ -58,7 +58,9 @@
             </li>
             <li>
                 <el-tag class="el-tag" effect="dark">文章封面</el-tag>
-                <el-upload
+                <Upload></Upload>
+                
+                <!-- <el-upload
                     class="upload-demo mt10"
                     :name="`file`"
                     :action="getActionUrl()"
@@ -67,7 +69,7 @@
                     list-type="picture"
                     :http-request="httpRequest">
                     <el-button size="small" type="primary">点击上传</el-button>
-                </el-upload>
+                </el-upload> -->
             </li>
             <li>
                 <el-tag class="el-tag" effect="dark">选择目录</el-tag>
@@ -132,8 +134,9 @@
 import { mapState } from 'vuex';
 import { getMenuList } from '@/api/menu';
 import { addArticle } from "@/api/article";
-import Axios from 'axios';
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
+import Upload from '@/components/upload';
 const download = {
     "name": null,
     "url": null,
@@ -142,7 +145,7 @@ const download = {
 }
 export default {
     name: "publishArticle",
-    components: { Editor, Toolbar },
+    components: { Editor, Toolbar, Upload },
     data() {
         return {
             reload: true,
@@ -184,25 +187,7 @@ export default {
         onCreated(editor) {
             this.editor = Object.seal(editor) // 一定要用 Object.seal() ，否则会报错
         },
-        getActionUrl() {
-            return `${process.env.VUE_APP_BASE_API}/file/upload`;
-        },
-        httpRequest(data) {
-            const formData = new FormData();
-            formData.append("files", data.file);
-            Axios({
-                baseURL: process.env.VUE_APP_BASE_API,
-                url: `/file/upload`,
-                method: `post`,
-                data: formData,
-                withCredentials: true
-            }).then(res => {
-                this.$message.success(`上传成功！`);
-                this.page.file.push(res.data.result);
-            }).catch(err => {
-                this.$message.error(err.msg);
-            })
-        },
+        
         submit() {
             
             const userId = this.userInfo.id;

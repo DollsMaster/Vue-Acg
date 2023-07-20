@@ -23,3 +23,11 @@ export function getArticleListByIsBanner(params) {
     params: params
   })
 }
+
+export function getArticleListByUserId(params) {
+  return request({
+    url: `/article/getArticleListByUserId`,
+    method: `get`,
+    params: params
+  })
+}

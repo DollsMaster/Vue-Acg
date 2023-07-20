@@ -12,18 +12,18 @@
 import bannerVue from '@/components/banner';
 import menuVue from './menu.vue';
 const obj = {};
-obj["bannerVue"] = bannerVue;
-obj["menuVue"] = menuVue;
-const requireComponent = require.context('../workSpace/children', false, /\w+\.vue$/);
-requireComponent.keys().forEach(fileName => {
-    let names = fileName
-    .split("/")
-    .pop()
-    .replace(/\.\w+$/, "");
-    const componentConfig = requireComponent(fileName);
-    // 若该组件是通过"export default"导出的，优先使用".default"，否则退回到使用模块的根
-    obj[names] = componentConfig.default || componentConfig;
-});
+    obj["bannerVue"] = bannerVue;
+    obj["menuVue"] = menuVue;
+const requireComponent = require.context('../workSpace/components', false, /\w+\.vue$/);
+    requireComponent.keys().forEach(fileName => {
+        let names = fileName
+        .split("/")
+        .pop()
+        .replace(/\.\w+$/, "");
+        const componentConfig = requireComponent(fileName);
+        // 若该组件是通过"export default"导出的，优先使用".default"，否则退回到使用模块的根
+        obj[names] = componentConfig.default || componentConfig;
+    });
 export default {
     components: obj,
     data() {

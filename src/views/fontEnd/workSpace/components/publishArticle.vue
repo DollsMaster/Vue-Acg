@@ -134,7 +134,7 @@
 import { mapState } from 'vuex';
 import { getMenuList } from '@/api/menu';
 import { addArticle } from "@/api/article";
-
+import Axios from "axios";
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import Upload from '@/components/upload';
 const download = {
@@ -152,7 +152,7 @@ export default {
             editor: null,
             html: '<p>hello</p>',
             toolbarConfig: { },
-            editorConfig: { placeholder: '请输入内容...' },
+            editorConfig: { MENU_CONF: {}, placeholder: '请输入内容...' },
             mode: 'default', // or 'simple'
 
 
@@ -171,6 +171,7 @@ export default {
     },
     beforeMount () {
         this.init();
+        this.initEditor();
     },
     computed: {
         ...mapState({
@@ -183,30 +184,78 @@ export default {
                 this.options = res.result;
                 console.log(res);
             });
+            
         },
         onCreated(editor) {
             this.editor = Object.seal(editor) // 一定要用 Object.seal() ，否则会报错
         },
-        
-        submit() {
-            
-            const userId = this.userInfo.id;
-            const page = JSON.parse(JSON.stringify(this.page));
-                page["userId"] = userId;
-                page.menus = page.menus[page.menus.length -1];
-                page.tags = page.tags.join(',');
-                page.downloads = JSON.stringify(page.downloads);
-                if (page.file.length > 0) {
-                    page.file = JSON.stringify(page.file[0])
+        initEditor() {
+            const _this = this;
+            this.editorConfig.MENU_CONF["uploadImage"] = {
+                async customUpload(file, insertFn) {
+                    const formData = new FormData();
+                        formData.append("files", file);
+                        Axios({
+                            baseURL: process.env.VUE_APP_BASE_API,
+                            url: `/file/upload`,
+                            method: `post`,
+                            data: formData,
+                            withCredentials: true
+                        }).then(res => {
+                            const {id, fileName, format, fileFullName} = res.data.result;
+                            const src = `${process.env.VUE_APP_BASE_API}/file/${fileName}${format}`;
+                            const alt = `${fileFullName}`;
+                            const list = _this.editor.getElemsByType('image');
+                            _this.fileList.push(res.data.result);
+                            insertFn(src, id, src);
+                        }).catch(err => {
+                            console.dir('------------error----------');
+                            console.log(err);
+                        })
+                },
+                customInsert(res, insertFn) {
+                    console.log(res);
                 }
-
-            const status = this.verify(page);
+            }
+        },
+        submit() {
+            const userId = this.userInfo.id;
+            const imageList = this.editor.getElemsByType("image")
+            const page = JSON.parse(JSON.stringify(this.page));
+            const d = {
+                userId: userId,
+                name: page.name,
+                cover: imageList.length > 0?imageList[0].src:null,
+                content: page.content,
+                tags: page.tags.join(','),
+                menus: page.menus && page.menus.length > 0?page.menus[page.menus.length -1]:null,
+                downloads: page.downloads.length <= 1 && !page.downloads[0].url ? null : JSON.stringify(page.downloads)
+            }
+            console.log('---------------submit-------------');
+            console.log(d);
+            const status = this.verify(d);
                 if (!status) return;
-                addArticle(page).then(res => {
+                addArticle(d).then(res => {
                     this.$message.success(res.msg);
                 });
         },
         verify(data) {
+            if (!data.name || data.name.length <= 0) {
+                this.$message.error(`请添加文章标题!`);
+                return false;
+            }
+            if (!data.content || data.content <= 0) {
+                this.$message.error(`请填写文章内容!`);
+                return false;
+            }
+            if (!data.menus || data.menus.length <= 0) {
+                this.$message.error(`请选择文章分区!`);
+                return false;
+            }
+            /* if (data.downloads.length <= 1 && !data.downloads[0].url) {
+                this.$message.error(`请输入资源下载地址!`);
+                return false;
+            } */
             return true;
         }
     },

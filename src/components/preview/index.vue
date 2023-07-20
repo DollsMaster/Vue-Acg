@@ -1,7 +1,7 @@
 <template>
     <div class="preview">
         <div class="preview-container">
-            <img :src="page.url" :alt="page.title">
+            <img :src="page.cover" :alt="page.title">
             <div>
                 <div class="name">
                     {{page.title}}
@@ -50,11 +50,8 @@ export default {
             const data = this.data;
                 this.page.title = data.name;
                 this.page.url = data.url
-                if (data.file) {
-                    const fileInfo = JSON.parse(data.file);
-                    this.page.url = `${process.env.VUE_APP_BASE_API}/file/${fileInfo.fileName}${fileInfo.format}`;
-                    this.page.avator = `${process.env.VUE_APP_BASE_API}/file/${fileInfo.fileName}${fileInfo.format}`;
-                }
+                this.page.cover = data.cover;
+                this.page.avator = data.cover;
                 const status = transformTimer(data.createTime);
                 if (status) {
                     this.page.time = transformTimer(data.createTime);

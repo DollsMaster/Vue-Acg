@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import config from "./config";
+import config from "./utils/config";
 import previewVue from "@/components/preview";
 import bannerPreviewVue from "@/components/bannerPreview";
 import { getArticleList, getArticleListByIsBanner } from "@/api/article";
@@ -190,7 +190,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import url("./mediaScreen.scss");
+@import url("./style/mediaScreen.scss");
 @import '@/styles/mixin.scss';
 
 .main-container {

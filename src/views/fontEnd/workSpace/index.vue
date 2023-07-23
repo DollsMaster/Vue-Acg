@@ -1,9 +1,17 @@
+<!--
+ * @Author: zhanghan 1599252137@qq.com
+ * @Date: 2023-07-21 22:39:14
+ * @LastEditors: zhanghan 1599252137@qq.com
+ * @LastEditTime: 2023-07-24 00:11:53
+ * @FilePath: \fkoad:\Github\vue-acg\src\views\fontEnd\workSpace\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
     <div class="workSpace" >
         <bannerVue></bannerVue>
         <div class="main" v-if="loadding">
             <menuVue @change="menuChange"></menuVue>
-            <component class="component-wrap" :is="getComponentName"  />
+            <component class="component-wrap" :is="getComponentName" @successEv="successEv" />
         </div>
     </div>
 </template>
@@ -51,6 +59,12 @@ export default {
             console.log('--menuChange-');
             console.log(data);
             this.getComponentName = data.value;
+        },
+        successEv(data) {
+            console.log('-------------------emit', data);
+            if (data && data.router_to) {
+                this.getComponentName = data.router_to;
+            }
         }
     },
 }

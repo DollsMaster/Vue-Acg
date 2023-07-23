@@ -1,3 +1,11 @@
+<!--
+ * @Author: zhanghan 1599252137@qq.com
+ * @Date: 2023-07-21 22:39:14
+ * @LastEditors: zhanghan 1599252137@qq.com
+ * @LastEditTime: 2023-07-23 23:45:49
+ * @FilePath: \fkoad:\Github\vue-acg\src\views\fontEnd\workSpace\menu.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
     <div class="menu">
         <ul>
@@ -32,6 +40,7 @@ export default {
                 if (params.hasOwnProperty("params")) {
                     console.log('aaaa');
                     console.log(params.params);
+                    console.log(this.menu);
                     this.$emit('change', JSON.parse(params.params));
                 } else {
 

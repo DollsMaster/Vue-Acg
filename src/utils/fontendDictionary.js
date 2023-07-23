@@ -2,7 +2,7 @@
  * @Author: zhanghan 1599252137@qq.com
  * @Date: 2023-06-22 16:59:12
  * @LastEditors: zhanghan 1599252137@qq.com
- * @LastEditTime: 2023-07-17 17:20:17
+ * @LastEditTime: 2023-07-23 23:42:28
  * @FilePath: \fkoad:\CPerson\ACG\vue-acg\src\utils\fontendDictionary.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -150,7 +150,7 @@ const dictionary = {
                     name: `我的作品`,
                     icon: 'el-icon-message-solid',
                     value: `production`,
-                    url: `/fontend/production`
+                    url: `/fontend/workSpace`
                 }, {
                     name: `收藏夹`,
                     icon: 'el-icon-star-on',

@@ -237,6 +237,10 @@ export default {
                 if (!status) return;
                 addArticle(d).then(res => {
                     this.$message.success(res.msg);
+                    console.log('--------------success');
+                    this.$emit('successEv', {
+                        'router_to': 'production'
+                    });
                 });
         },
         verify(data) {

@@ -8,9 +8,10 @@
                 <template slot-scope="scope">
                     <div class="wrap">
                         <el-image
-                        style="width: 30px; height: 30px"
+                        class="el-image"
+                        style="width: 60px; height: 60px"
                         :src="scope.row.cover"
-                        :fit="`contain`"></el-image> 
+                        :fit="`cover`"></el-image> 
                     </div>
                 </template>
             </el-table-column>
@@ -88,6 +89,9 @@ export default {
 }
 .wrap {
     font-size: 12px;
+}
+.el-image {
+    border-radius: 50%;
 }
 </style>
 <style>
